@@ -1,0 +1,5 @@
+E:\ReRay3D\ReRay3D\obj\Debug\net5.0\ReRay3D.csproj.AssemblyReference.cache
+E:\ReRay3D\ReRay3D\obj\Debug\net5.0\ReRay3D.GeneratedMSBuildEditorConfig.editorconfig
+E:\ReRay3D\ReRay3D\obj\Debug\net5.0\ReRay3D.AssemblyInfoInputs.cache
+E:\ReRay3D\ReRay3D\obj\Debug\net5.0\ReRay3D.AssemblyInfo.cs
+E:\ReRay3D\ReRay3D\obj\Debug\net5.0\ReRay3D.csproj.CoreCompileInputs.cache

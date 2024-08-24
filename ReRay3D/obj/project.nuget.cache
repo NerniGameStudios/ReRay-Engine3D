@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "dgSpecHash": "c36Bux9oiqF2S/8LqkpkN/59JieYYcZ8U9ejA7Nf1cRgZLC3pXJcMrzDGzaSmP2Nqwl+rwoEgdfF8zbWjAN96g==",
+  "success": true,
+  "projectFilePath": "E:\\ReRay3D\\ReRay-3D-2D-engine\\ReRay3D\\ReRay3D.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk\\4.6.4\\opentk.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.compute\\4.6.4\\opentk.compute.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.core\\4.6.4\\opentk.core.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.graphics\\4.6.4\\opentk.graphics.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.input\\4.6.4\\opentk.input.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.mathematics\\4.6.4\\opentk.mathematics.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.openal\\4.6.4\\opentk.openal.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.redist.glfw\\3.3.0-pre20200830200122\\opentk.redist.glfw.3.3.0-pre20200830200122.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.windowing.common\\4.6.4\\opentk.windowing.common.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.windowing.desktop\\4.6.4\\opentk.windowing.desktop.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\opentk.windowing.graphicslibraryframework\\4.6.4\\opentk.windowing.graphicslibraryframework.4.6.4.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\stbimagesharp\\2.27.14\\stbimagesharp.2.27.14.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.15\\microsoft.netcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.15\\microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\NGS\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.15\\microsoft.netcore.app.host.win-x64.7.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}
