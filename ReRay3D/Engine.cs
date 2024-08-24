@@ -42,7 +42,7 @@ namespace ReRay3D
                 Profile = ContextProfile.Compatability,
                 API = ContextAPI.OpenGL,
 
-                IsFullscreen = true,
+              
                 NumberOfSamples = 0
             };
             
