@@ -11,7 +11,7 @@ namespace ReRay3D
     public class Texture
     {
 
-
+        static public List<int> textures = new List<int>();
         static public int LoadFromFile(string path, bool filter)
         {
             
@@ -86,6 +86,7 @@ namespace ReRay3D
 
 
             Debug.Log("Loader: Файл загружен " + path);
+            textures.Add(tex);
             return tex;
         }
 

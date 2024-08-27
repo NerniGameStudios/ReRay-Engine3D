@@ -6,12 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.IO.Ports;
+
 namespace ReRay3D.UserClasses
 {
     internal class ExampleScene
     {
-      //Обязательная переменная
-       public bool start = true;
+
+        //Обязательная переменная
+        public bool start = true;
+
+
+        AudioSource sound = new();
 
         public Text text = new();
         public Text text2 = new();
@@ -27,11 +33,21 @@ namespace ReRay3D.UserClasses
         float rotateFun;
         float rotateFun2;
 
+        Mesh cube = new Mesh("Res/untitled.obj");
+        Mesh cube2 = new Mesh("Res/Magazin_besplatno.fbx");
+        bool com;
+
         // Эта функция отвечает за прогрузку движка
         // Лучше всего здесь загружать текст и обьекты с текстурами 
 
         public void Init()
         {
+            sound.looped = true;
+            sound.Volume = 0.2f;
+
+            cube.LoadText("Res/g.png", true);
+            cube2.LoadText("Res/supermarket040123.jpg", true);
+
             cubeExample.LoadText("Res/g.png", true);
             cubeExample2.LoadText("Res/g.png", true);
             cubeExample3.LoadText("Res/g.png", true);
@@ -53,7 +69,8 @@ namespace ReRay3D.UserClasses
         // Выполняется в первый активный кадр 
         public void Start()
         {
-                Debug.Log(" Лучшая сцена ");
+            Debug.Log(" Лучшая сцена ");
+            sound.Play("Res/ophelia.mp3");
         }
         // Выполняется каждый кадр
         public void Update()
@@ -64,6 +81,14 @@ namespace ReRay3D.UserClasses
                 start = false;
             }
 
+          
+
+            cube2.position = new Vector3(0, 0, -7);
+            cube2.rotate = new Vector3(-90, 0, Window.MouseX * 360);
+            cube2.scale = new Vector3(0.13f);
+            cube2.Update();
+
+
             text4.Update();
             text4.translate("F11 - Fullscreen    F10 - Vsync");
 
@@ -71,12 +96,12 @@ namespace ReRay3D.UserClasses
             cubeExample3.position = new Vector3(5, 0, -10);
             cubeExample3.rotate = new Vector3(rotateFun2);
             cubeExample3.Update();
-            rotateFun2 += 50 *Time.DeltaTime;
+            rotateFun2 += 50 * Time.DeltaTime;
 
             text3.Update();
             text3.translate("Time.DeltaTime");
 
-            cubeExample.position = new Vector3(0,0,-10);
+            cubeExample.position = new Vector3(0, 0, -10);
             cubeExample.rotate = new Vector3(rotateFun);
             cubeExample.Update();
             rotateFun++;
@@ -98,12 +123,14 @@ namespace ReRay3D.UserClasses
 
             textfps.Update();
             textfps.translate("FPS " + Time.FPS);
+           
 
         }
-        // Выполняется при переключениии в scenemanager
-        public void Stop()
-        {
-            start = true;
+            // Выполняется при переключениии в scenemanager
+            public void Stop()
+            {
+                start = true;
+            }
+
         }
-    }
 }
