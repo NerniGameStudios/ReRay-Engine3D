@@ -1,17 +1,25 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using System;
+using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
+using StbImageSharp;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assimp;
+using Assimp.Unmanaged;
+using static OpenTK.Graphics.OpenGL.GL;
+using System.IO;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace ReRay3D
 {
     internal class Mesh
     {
         int texsture;
-       
+        int texsturebuiltin;
+
         public Vector3 position = new Vector3();
         public Vector3 rotate = new Vector3();
         public Vector3 scale = new Vector3(1, 1, 1);
@@ -19,96 +27,100 @@ namespace ReRay3D
         public void LoadText(string path, bool filtr)
         {
             texsture = Texture.LoadFromFile(path, filtr);
+            
 
         }
+       
 
-        private List<Vector3> vertices = new List<Vector3>();
-        private List<Vector3> normals = new List<Vector3>();
-        private List<Vector2> texCoords = new List<Vector2>();
-        private List<uint> indices = new List<uint>();
-        private int vaoID, vboID, eboID;
-        private int vertexCount;
-        public List<String> dataObj = new List<String>();
-        public List<String> dataind = new List<String>();
+        private List<float> vertices = new List<float>();
+        private List<float> normals = new List<float>();
+        private List<float> texCoords = new List<float>();
+        private List <uint> indices = new List<uint>();
 
+    
         public Mesh(string fileName)
         {
             LoadOBJ(fileName);
          
         }
+
+
         public void LoadOBJ(string path)
         {
 
             try
             {
-                dataObj = LoaderConfFile.Load(path);
 
-                foreach (string line in dataObj)
+             var Model = new AssimpContext();
+                var _mesh = Model.ImportFile(path, PostProcessSteps.Triangulate  | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.JoinIdenticalVertices);
+
+
+                
+
+                    foreach (var _Mesh in _mesh.Meshes)
                 {
+                    
 
 
-                    if (line.ToLower().StartsWith("v "))
+                    foreach (var Vertex in _Mesh.Vertices)
                     {
-                        var vx = line.Split(' ')
-                            .Skip(1)
-                            .Select(v => float.Parse(v.Replace('.', ',')))
-                            .ToArray();
-                        vertices.Add(new Vector3(vx[0], vx[1], vx[2]));
-                    }
-                    else if (line.ToLower().StartsWith("vn "))
-                    {
-                        var vx = line.Split(' ')
-                           .Skip(1)
-                           .Select(v => float.Parse(v.Replace('.', ',')))
-                           .ToArray();
-                        normals.Add(new Vector3(vx[0], vx[1], vx[2]));
-                    }
-                    else if (line.ToLower().StartsWith("vt "))
-                    {
-                        var vx = line.Split(' ')
-                           .Skip(1)
-                           .Select(v => float.Parse(v.Replace('.', ',')))
-                           .ToArray();
-                        texCoords.Add(new Vector2(vx[0], vx[1]));
-                    }
-                    else if (line.ToLower().StartsWith("f "))
-                    {
-                        
-                            var vx = line.Split(' ')
-                           .Skip(1);
+                        vertices.Add(Vertex.X);
+                        vertices.Add(Vertex.Y);
+                        vertices.Add(Vertex.Z);
 
-                            foreach (var item in vx)
-                            {
-                            string[] indd = item.Split('/') ;
-                                
-                               indices.Add(uint.Parse(indd[0]) - 1);
-                           
-
-                            }
-
-                        
                     }
+
+                
+                    foreach (var TextureCoord in _Mesh.TextureCoordinateChannels[0])
+                    {
+                        texCoords.Add(TextureCoord.X);
+                        texCoords.Add(TextureCoord.Y);
+
+                    }
+
+
+                    foreach (var Normal in _Mesh.Normals)
+                    {
+                        normals.Add(Normal.X);
+                        normals.Add(Normal.Y);
+                        normals.Add(Normal.Z);
+
+                    }
+                    foreach (uint ind in _Mesh.GetIndices())
+                    {
+                        indices.Add(ind);
+
+                    }
+
+
+                    
+
                 }
-            }
+ 
+              
+
+           
+
+
+                }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            foreach (var item in indices)
-            {
-                Debug.Log("" + item);
-                
-            }
-            
+
+
+
             
         }
+
+     
         public void Update()
             {
 
 
             
 
-            Window.triangles += 2;
+         
             GL.BindTexture(TextureTarget.Texture2D, texsture - 1);
             GL.PushMatrix();
             GL.Translate(position);
@@ -116,20 +128,28 @@ namespace ReRay3D
             GL.Rotate(rotate.Y, 0, 1, 0);
             GL.Rotate(rotate.Z, 0, 0, 1);
             GL.Scale(scale);
-
-
-            GL.VertexPointer(3, VertexPointerType.Float, 0, vertices.ToArray());
-            GL.EnableClientState(ArrayCap.VertexArray);
-
-            GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, texCoords.ToArray());
-            GL.EnableClientState(ArrayCap.TextureCoordArray);
-
             GL.Color4(color);
-            GL.DrawElements(BeginMode.TriangleStripAdjacency,indices.Count,DrawElementsType.UnsignedInt,indices.ToArray());
+           // GL.BindVertexArray(vaoID);
+           // GL.DrawArrays(OpenTK.Graphics.OpenGL.PrimitiveType.LineStrip, 0, indices.Count);
+           // GL.BindVertexArray(0);
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.VertexPointer(3, VertexPointerType.Float, 0, vertices.ToArray());
+            
+            GL.EnableClientState(ArrayCap.TextureCoordArray);
+            GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, texCoords.ToArray());
+            
+            GL.EnableClientState(ArrayCap.NormalArray);
+            GL.NormalPointer(NormalPointerType.Float, 0, normals.ToArray());
+            
+
+            
+            GL.DrawElements(BeginMode.Triangles, indices.Count, DrawElementsType.UnsignedInt, indices.ToArray());
+
             GL.DisableClientState(ArrayCap.VertexArray);
+            GL.DisableClientState(ArrayCap.TextureCoordArray);
+            GL.DisableClientState(ArrayCap.NormalArray);
 
-
-            // GL.DeleteTexture(texsture);
+            
 
             GL.PopMatrix();
 
