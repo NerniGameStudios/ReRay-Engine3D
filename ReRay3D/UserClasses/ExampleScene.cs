@@ -13,6 +13,10 @@ namespace ReRay3D.UserClasses
       //Обязательная переменная
        public bool start = true;
 
+        Mesh magaz = new("Res/Magazin_besplatno.fbx", "Res\\supermarket040123.jpg");
+
+        AudioSource sound = new();
+
         public Text text = new();
         public Text text2 = new();
         public Text text3 = new();
@@ -32,6 +36,7 @@ namespace ReRay3D.UserClasses
 
         public void Init()
         {
+            
             cubeExample.LoadText("Res/g.png", true);
             cubeExample2.LoadText("Res/g.png", true);
             cubeExample3.LoadText("Res/g.png", true);
@@ -53,7 +58,8 @@ namespace ReRay3D.UserClasses
         // Выполняется в первый активный кадр 
         public void Start()
         {
-                Debug.Log(" Лучшая сцена ");
+            sound.Play("Res/ophelia.mp3");
+            Debug.Log(" Лучшая сцена ");
         }
         // Выполняется каждый кадр
         public void Update()
@@ -67,6 +73,10 @@ namespace ReRay3D.UserClasses
             text4.Update();
             text4.translate("F11 - Fullscreen    F10 - Vsync");
 
+            magaz.position = new Vector3(0, 0, -5);
+            magaz.scale = new Vector3(0.15f);
+            magaz.rotate = new Vector3(-90, 0, 90);
+            magaz.Update();
 
             cubeExample3.position = new Vector3(5, 0, -10);
             cubeExample3.rotate = new Vector3(rotateFun2);

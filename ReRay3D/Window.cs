@@ -87,8 +87,8 @@ namespace ReRay3D
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.Enable(EnableCap.ColorMaterial); 
-           // GL.Enable(EnableCap.Lighting);
-          //  GL.Enable(EnableCap.Light0);
+            GL.Enable(EnableCap.Lighting);
+          GL.Enable(EnableCap.Light0);
             GL.Enable(EnableCap.Normalize);
             GL.CullFace(CullFaceMode.Back);
             GL.AlphaFunc(AlphaFunction.Greater ,0);
@@ -257,7 +257,7 @@ namespace ReRay3D
             {
                 //I327.Update();
                 text.Update();
-                text.translate("Engine ver 0.1");
+                text.translate("Engine ver 0.2");
                 if (logonl)
                 {
                     if (alphalogon < 1)
@@ -362,6 +362,7 @@ namespace ReRay3D
         protected override void OnUnload()
         {
             base.OnUnload();
+            GL.DeleteTextures(Texture.textures.Count, Texture.textures.ToArray());
         }
         public static void Exit()
         {

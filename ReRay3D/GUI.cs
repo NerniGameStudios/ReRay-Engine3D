@@ -33,6 +33,7 @@ namespace ReRay3D.GUI
         }
         public void Update()
           {
+            GL.Disable(EnableCap.Lighting);
             GL.PushMatrix();
             Matrix4 GUi = Matrix4.LookAt(0, 0, 0.1001f
                           , 0,  0, 0
@@ -46,6 +47,7 @@ namespace ReRay3D.GUI
             quad.Update();
 
             GL.PopMatrix();
+            GL.Enable(EnableCap.Lighting);
         }
         public void translate(Vector3 pos, Vector2 scale)
         {
@@ -109,7 +111,7 @@ namespace ReRay3D.GUI
 
         public void Update()
         {
-            
+            GL.Disable(EnableCap.Lighting);
             poschar = new Vector2();
             GL.PushMatrix();
             GL.Color4(color);
@@ -195,6 +197,7 @@ namespace ReRay3D.GUI
             
 
             GL.PopMatrix();
+            GL.Enable(EnableCap.Lighting);
         }
         public void translate(string text,Vector2 pos, Vector2 scale)
         {

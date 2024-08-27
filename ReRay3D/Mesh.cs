@@ -18,7 +18,7 @@ namespace ReRay3D
     internal class Mesh
     {
         int texsture;
-        int texsturebuiltin;
+     
 
         public Vector3 position = new Vector3();
         public Vector3 rotate = new Vector3();
@@ -42,6 +42,12 @@ namespace ReRay3D
         {
             LoadOBJ(fileName);
          
+        }
+        public Mesh(string fileName , string texturename)
+        {
+            LoadOBJ(fileName);
+            LoadText(texturename,true);
+
         }
 
 

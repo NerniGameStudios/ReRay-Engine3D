@@ -11,7 +11,7 @@ namespace ReRay3D
     public class Texture
     {
 
-
+        static public List<int> textures = new List<int>();
         static public int LoadFromFile(string path, bool filter)
         {
             
@@ -77,7 +77,6 @@ namespace ReRay3D
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureParameterName.ClampToEdge);
             GL.BindTexture(TextureTarget.Texture2D, tex);
             GL.GenerateTextureMipmap(tex);
-                
 
 
 
@@ -85,6 +84,7 @@ namespace ReRay3D
 
 
 
+            textures.Add(tex);
             Debug.Log("Loader: Файл загружен " + path);
             return tex;
         }
