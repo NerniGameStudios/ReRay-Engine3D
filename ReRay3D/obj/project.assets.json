@@ -425,11 +425,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\ReRay3D\\ReRay-3D-2D-engine\\ReRay3D\\ReRay3D.csproj",
+      "projectUniqueName": "E:\\ReRay3D\\ReRay-3D-2D-engine\\ReRay-Engine\\ReRay3D\\ReRay3D.csproj",
       "projectName": "ReRay3D",
-      "projectPath": "E:\\ReRay3D\\ReRay-3D-2D-engine\\ReRay3D\\ReRay3D.csproj",
+      "projectPath": "E:\\ReRay3D\\ReRay-3D-2D-engine\\ReRay-Engine\\ReRay3D\\ReRay3D.csproj",
       "packagesPath": "C:\\Users\\NGS\\.nuget\\packages\\",
-      "outputPath": "E:\\ReRay3D\\ReRay-3D-2D-engine\\ReRay3D\\obj\\",
+      "outputPath": "E:\\ReRay3D\\ReRay-3D-2D-engine\\ReRay-Engine\\ReRay3D\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\NGS\\AppData\\Roaming\\NuGet\\NuGet.Config",
