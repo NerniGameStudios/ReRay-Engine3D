@@ -1,17 +1,10 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using System;
-using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
-using StbImageSharp;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Assimp;
-using Assimp.Unmanaged;
-using static OpenTK.Graphics.OpenGL.GL;
-using System.IO;
-using static System.Formats.Asn1.AsnWriter;
+
+
+
 
 namespace ReRay3D
 {
@@ -24,6 +17,14 @@ namespace ReRay3D
         public Vector3 rotate = new Vector3();
         public Vector3 scale = new Vector3(1, 1, 1);
         public Vector4 color = new Vector4(1, 1, 1, 1);
+
+        public Vector4 materialSpecular = new Vector4();
+        public Vector4 materialDiffuse = new Vector4();
+        public Vector4  materialEmission = new Vector4();
+       
+        public float materialShininess = new float();
+        public float materialAmbient = new float();
+
         public void LoadText(string path, bool filtr)
         {
             texsture = Texture.LoadFromFile(path, filtr);
@@ -53,9 +54,8 @@ namespace ReRay3D
 
         public void LoadOBJ(string path)
         {
-
-            try
-            {
+            bool flag = true;
+            
 
              var Model = new AssimpContext();
                 var _mesh = Model.ImportFile(path, PostProcessSteps.Triangulate  | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.JoinIdenticalVertices);
@@ -92,31 +92,34 @@ namespace ReRay3D
                         normals.Add(Normal.Z);
 
                     }
+
+                if (flag)
+                {
                     foreach (uint ind in _Mesh.GetIndices())
-                    {
+                {
+                    
                         indices.Add(ind);
-
-                    }
-
-
+                        
+                      
+                    
                     
 
                 }
- 
-              
-
-           
-
-
+                    flag = false;
                 }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
             }
 
 
 
+
             
+
+
+
+
+
+
+
         }
 
      
@@ -127,17 +130,17 @@ namespace ReRay3D
             
 
          
-            GL.BindTexture(TextureTarget.Texture2D, texsture - 1);
+            
             GL.PushMatrix();
             GL.Translate(position);
             GL.Rotate(rotate.X, 1, 0, 0);
             GL.Rotate(rotate.Y, 0, 1, 0);
             GL.Rotate(rotate.Z, 0, 0, 1);
             GL.Scale(scale);
-            GL.Color4(color);
-           // GL.BindVertexArray(vaoID);
-           // GL.DrawArrays(OpenTK.Graphics.OpenGL.PrimitiveType.LineStrip, 0, indices.Count);
-           // GL.BindVertexArray(0);
+            
+
+           
+
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.VertexPointer(3, VertexPointerType.Float, 0, vertices.ToArray());
             
@@ -146,15 +149,30 @@ namespace ReRay3D
             
             GL.EnableClientState(ArrayCap.NormalArray);
             GL.NormalPointer(NormalPointerType.Float, 0, normals.ToArray());
-            
+
+
+            GL.BindTexture(TextureTarget.Texture2D, texsture - 1  );
+            // GL.DrawElements(BeginMode.Triangles, indices.Count, DrawElementsType.UnsignedInt, indices.ToArray());
+            GL.Material(MaterialFace.Front, MaterialParameter.Specular, materialSpecular);
+            GL.Material(MaterialFace.Front, MaterialParameter.Shininess, materialShininess);
+            GL.Material(MaterialFace.Front, MaterialParameter.Diffuse, materialDiffuse);
+            GL.Material(MaterialFace.Front, MaterialParameter.Ambient, materialAmbient);
+            GL.Material(MaterialFace.Front, MaterialParameter.Emission, materialEmission);
+
+
+            GL.Color4(color);
+            GL.DrawElements(BeginMode.Triangles, indices.Count, DrawElementsType.UnsignedInt, indices.ToArray());
+
 
             
-            GL.DrawElements(BeginMode.Triangles, indices.Count, DrawElementsType.UnsignedInt, indices.ToArray());
 
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.DisableClientState(ArrayCap.TextureCoordArray);
             GL.DisableClientState(ArrayCap.NormalArray);
-
+            Window.triangles += indices.Count / 3;
+            
+         
+            
             
 
             GL.PopMatrix();

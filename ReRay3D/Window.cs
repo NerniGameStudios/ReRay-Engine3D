@@ -4,8 +4,10 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using ReRay3D.GUI;
+using ReRay3D.UserClasses;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,9 +39,11 @@ namespace ReRay3D
         static ImageGUI I327 = new();
         static float alphalogo;
         static float alphalogon = 0;
-        static float animlogo;
+        static float animlogo; 
         static Text text = new Text();
         bool logonloaded;
+
+        static int modepoly;
 
         bool logonl = true;
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
@@ -76,7 +80,7 @@ namespace ReRay3D
         protected override void OnLoad()
         {
 
-            //CursorGrabbed = true;
+            CursorState = CursorState.Grabbed;
 
             base.OnLoad();
         
@@ -87,8 +91,21 @@ namespace ReRay3D
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.Enable(EnableCap.ColorMaterial); 
+            GL.Enable(EnableCap.VertexArray);
+            GL.Enable(EnableCap.NormalArray);
+            //GL.Enable(EnableCap.ColorArray);
+            GL.Enable(EnableCap.TextureCoordArray);
+           GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.Lighting);
           GL.Enable(EnableCap.Light0);
+            GL.Enable(EnableCap.Light1);
+            GL.Enable(EnableCap.Light2);
+            GL.Enable(EnableCap.Light3);
+            GL.Enable(EnableCap.Light4);
+            GL.Enable(EnableCap.Light5);
+            GL.Enable(EnableCap.Light6);
+            GL.Enable(EnableCap.Light7);
+            
             GL.Enable(EnableCap.Normalize);
             GL.CullFace(CullFaceMode.Back);
             GL.AlphaFunc(AlphaFunction.Greater ,0);
@@ -107,22 +124,127 @@ namespace ReRay3D
 
             
             logo.position.Z = 0.00001f;
-            I327.position.Z = 0.000002f;
-            // GL.PolygonMode(MaterialFace.Front,PolygonMode.Line);
+         
+            
 
         }
-        public static void LightBuildin(Vector3 position)
+        public static void LightBuildin(Vector3 position, Vector3 rotation, Vector3 color , float intensity)
         {
+            
             Quad gizmolight = new Quad();
             GL.PushMatrix();
             GL.Translate(position);
+            GL.Rotate(rotation.X, 1, 0, 0);
+            GL.Rotate(rotation.Y, 0, 1, 0);
+            GL.Rotate(rotation.Z, 0, 0, 1);
+           
+            GL.Light(LightName.Light0, LightParameter.Specular, new Vector4(color.X, color.Y, color.Z, 0) * intensity);
+            GL.Light(LightName.Light0, LightParameter.Diffuse, new Vector4(color.X, color.Y, color.Z, 0) * intensity);
             GL.Light(LightName.Light0, LightParameter.Position,new Vector4(0,1,0,0));
+            GL.BindTexture(TextureTarget.Texture2D, -1);
+            GL.LineWidth(10);
+            GL.Begin(PrimitiveType.Lines);
+            GL.Color4(color.X, color.Y, color.Z, 0);
+            GL.Vertex3(0, 0, 0);
+            GL.Color4(color.X, color.Y, color.Z, 1);
+            GL.Vertex3(0, 1f,0);
+            GL.End();
         
-            gizmolight.Update(position,new Vector3(0,0,0),new Vector3(1));
            
             GL.PopMatrix();
            
         }
+
+        public static void LightBuildinPoint(Vector3 position, Vector3 rotation, Vector3 color, float size, float intensity)
+        {
+            if (size == 0)
+            {
+                size = 1;
+            }
+            Quad gizmolight = new Quad();
+            GL.PushMatrix();
+            GL.Translate(position);
+           
+
+            GL.Light(LightName.Light1, LightParameter.Position, new Vector4(0, 0f, 0, -1));
+            GL.Light(LightName.Light1, LightParameter.Specular, new Vector4(color.X, color.Y, color.Z, 0));
+            GL.Light(LightName.Light1, LightParameter.Diffuse, new Vector4(color.X, color.Y, color.Z, 0) * intensity);
+            
+
+            float[] constantAttenuation = { (1f / intensity) / (size *1f)  }; 
+            float[] linearAttenuation = { (0.15f / intensity) / (size * 0.1f ) };    
+            float[] quadraticAttenuation = { (0.1f / intensity) / (size *0.01f  )}; 
+
+            GL.Light(LightName.Light1, LightParameter.ConstantAttenuation, constantAttenuation);
+            GL.Light(LightName.Light1, LightParameter.LinearAttenuation, linearAttenuation);
+            GL.Light(LightName.Light1, LightParameter.QuadraticAttenuation, quadraticAttenuation);
+
+            
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            GL.PointSize(10);
+            GL.Disable(EnableCap.Lighting);
+            GL.Begin(PrimitiveType.Points);
+
+            GL.Color4(color.X, color.Y, color.Z, 1);
+            GL.Vertex3(0, 0, 0);
+            
+            GL.End();
+            GL.Enable(EnableCap.Lighting);
+
+            GL.PopMatrix();
+
+        }
+
+
+        public static void LightBuildinPoint2(Vector3 position, Vector3 rotation, Vector3 color, float size, float intensity)
+        {
+            if (size == 0)
+            {
+                size = 1;
+            }
+            Quad gizmolight = new Quad();
+            GL.PushMatrix();
+            GL.Translate(position);
+
+
+            GL.Light(LightName.Light2, LightParameter.Position, new Vector4(0, 0f, 0, -1));
+            GL.Light(LightName.Light2, LightParameter.Specular, new Vector4(color.X, color.Y, color.Z, 0));
+            GL.Light(LightName.Light2, LightParameter.Diffuse, new Vector4(color.X, color.Y, color.Z, 0) * intensity);
+
+
+            float[] constantAttenuation = { (1f / intensity) / (size * 1f) };
+            float[] linearAttenuation = { (0.15f / intensity) / (size * 0.1f) };
+            float[] quadraticAttenuation = { (0.1f / intensity) / (size * 0.01f) };
+
+            GL.Light(LightName.Light2, LightParameter.ConstantAttenuation, constantAttenuation);
+            GL.Light(LightName.Light2, LightParameter.LinearAttenuation, linearAttenuation);
+            GL.Light(LightName.Light2, LightParameter.QuadraticAttenuation, quadraticAttenuation);
+
+
+
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+            GL.PointSize(10);
+            GL.Begin(PrimitiveType.Points);
+            GL.Color4(color.X, color.Y, color.Z, 1);
+            GL.Vertex3(0, 0, 0);
+
+            GL.End();
+
+
+            GL.PopMatrix();
+
+        }
+
+
+
+
+
+
+
+
+
+
         protected override void OnResize(ResizeEventArgs e)
         {
             base.OnResize(e);
@@ -168,15 +290,15 @@ namespace ReRay3D
         {
 
            
-            // GL.LightModel(LightModelParameter.LightModelAmbient,0f);
+            
             // GL.ClearColor(Color4.LightBlue);
 
             Window.stk = KeyboardState;
             Window.mtk = MouseState;
-          
 
 
-
+            FreeCam.Updatemouse();
+            
 
             if (!stk.IsKeyReleased(Keys.F11))
             {
@@ -189,6 +311,37 @@ namespace ReRay3D
 
                 }
             }
+
+           
+                if (stk.IsKeyPressed(Keys.F9))
+                {
+                modepoly++;
+                switch(modepoly)
+                {
+                    case 1:
+                        GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
+                        break;
+
+                    case 2:
+                        GL.PolygonMode(MaterialFace.Front, PolygonMode.Line);
+                        break;
+
+                    case 3:
+                        GL.PolygonMode(MaterialFace.Front, PolygonMode.Point);
+
+                        break;
+                    case 4:
+                        modepoly = 0;
+
+                        break;
+                }
+
+
+                    
+
+
+                }
+            
 
             if (!stk.IsKeyReleased(Keys.F10))
             {

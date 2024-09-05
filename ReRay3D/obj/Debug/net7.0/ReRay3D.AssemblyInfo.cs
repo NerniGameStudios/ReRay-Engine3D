@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReRay3D")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7367edb50e7bcb4d531a56a6ed9ba70083a745b1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11916604b5575cffe74d5e818616be7313f32737")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReRay3D")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReRay3D")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

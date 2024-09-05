@@ -37,13 +37,14 @@ namespace ReRay3D
                 WindowState = WindowState.Normal,
                 Title = Debug.filer[2],
                
-                Flags = ContextFlags.Default,
-                APIVersion = new Version(4, 1),
+                Flags = ContextFlags.Debug,
+                APIVersion = new Version(4,2),
                 Profile = ContextProfile.Compatability,
                 API = ContextAPI.OpenGL,
+                
 
-              
-                NumberOfSamples = 0
+
+            NumberOfSamples = 0
             };
             
 
